@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Jokes</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">github.com/EvgenySobko</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="button">RELOAD</string>
+    <string name="textview">Count</string>
+    <string name="browser_activity">Api info</string>
+    <string name="title_activity_browser">Api info</string>
+</resources>
