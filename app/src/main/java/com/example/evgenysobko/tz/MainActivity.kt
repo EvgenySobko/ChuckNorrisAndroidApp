@@ -7,6 +7,8 @@ import android.support.design.widget.TextInputLayout
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.ListView
@@ -21,7 +23,7 @@ import java.io.IOException
 open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private val url = "http://api.icndb.com/jokes/random/"
-    private var jokes: MutableList<String> = mutableListOf()
+    private var jokes: MutableList<Joke> = mutableListOf()
     private var count: Int = 0
     private var okHttpClient: OkHttpClient = OkHttpClient()
     private var inputtedText: TextInputLayout? = null
@@ -55,10 +57,11 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 }
             }
         }
-
-        val listView: ListView = findViewById(R.id.list_of_jokes)
-        val adapter: ArrayAdapter<String> = ArrayAdapter(this, android.R.layout.simple_list_item_1, jokes)
-        listView.adapter = adapter
+        val recyclerView = findViewById<RecyclerView>(R.id.list_of_jokes)
+        val adapter = Adapter(jokes)
+        recyclerView.adapter = adapter
+        val linearLayoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = linearLayoutManager
     }
 
     private fun loadRandomFact() {
@@ -71,7 +74,7 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 val json = response?.body()?.string()
                 val txt = (JSONObject(json).getJSONObject("value").get("joke")).toString()
                 txt.replace("&quot;", "")
-                jokes.add(txt)
+                jokes.add(Joke(txt))
             }
         })
 

@@ -11,4 +11,5 @@
     <string name="browser_activity">browser_activity</string>
     <string name="title_activity_browser">Api info</string>
     <string name="joke">Joke</string>
+    <string name="textview1">TextView</string>
 </resources>
