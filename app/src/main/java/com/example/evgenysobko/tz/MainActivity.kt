@@ -40,20 +40,20 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         inputtedText = findViewById(R.id.input_text)
 
         button2.setOnClickListener {
+            var stringNum: String = inputtedText!!.editText!!.text.toString()
             jokes.clear()
-            count = inputtedText!!.editText!!.text.toString().toInt()
-            if (count == 0) {
+            if (!stringNum.contains(Regex("""\d""")) || stringNum == "") {
                 Toast.makeText(applicationContext, "Enter the correct number of jokes", Toast.LENGTH_LONG).show()
-            }
-            else {
+            } else {
+                count = inputtedText!!.editText!!.text.toString().toInt()
                 for (i in 1..count) {
                     loadRandomFact()
                 }
             }
         }
+
         val listView: ListView = findViewById(R.id.list_of_jokes)
-        val adapter: ArrayAdapter<String>
-                = ArrayAdapter(this, android.R.layout.simple_list_item_1, jokes)
+        val adapter: ArrayAdapter<String> = ArrayAdapter(this, android.R.layout.simple_list_item_1, jokes)
         listView.adapter = adapter
     }
 
