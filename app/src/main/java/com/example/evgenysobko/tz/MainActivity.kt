@@ -40,11 +40,15 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         inputtedText = findViewById(R.id.input_text)
 
         button2.setOnClickListener {
-            var stringNum: String = inputtedText!!.editText!!.text.toString()
+            val stringNum: String = inputtedText!!.editText!!.text.toString()
             jokes.clear()
-            if (!stringNum.contains(Regex("""\d""")) || stringNum == "") {
+            if (!stringNum.contains(Regex("""\d""")) || stringNum == "" || stringNum == "0" ) {
                 Toast.makeText(applicationContext, "Enter the correct number of jokes", Toast.LENGTH_LONG).show()
             } else {
+
+                // Sometimes it crashes when you try to load a lot of jokes, sometimes it doesn't.
+                // I dunno know why that's happening.
+
                 count = inputtedText!!.editText!!.text.toString().toInt()
                 for (i in 1..count) {
                     loadRandomFact()
@@ -66,8 +70,8 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             override fun onResponse(call: Call?, response: Response?) {
                 val json = response?.body()?.string()
                 val txt = (JSONObject(json).getJSONObject("value").get("joke")).toString()
+                txt.replace("&quot;", "")
                 jokes.add(txt)
-                jokes.toString().replace("&quot", "")
             }
         })
 
