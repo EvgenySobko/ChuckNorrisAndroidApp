@@ -10,8 +10,6 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
-import android.widget.ArrayAdapter
-import android.widget.ListView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -41,9 +39,15 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         inputtedText = findViewById(R.id.input_text)
 
+        val recyclerView = findViewById<RecyclerView>(R.id.list_of_jokes)
+        val adapter = Adapter(jokes)
+        recyclerView.adapter = adapter
+        val linearLayoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = linearLayoutManager
+
         button2.setOnClickListener {
-            val stringNum: String = inputtedText!!.editText!!.text.toString()
             jokes.clear()
+            val stringNum: String = inputtedText!!.editText!!.text.toString()
             if (!stringNum.contains(Regex("""\d""")) || stringNum == "" || stringNum == "0" ) {
                 Toast.makeText(applicationContext, "Enter the correct number of jokes", Toast.LENGTH_LONG).show()
             } else {
@@ -57,11 +61,6 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 }
             }
         }
-        val recyclerView = findViewById<RecyclerView>(R.id.list_of_jokes)
-        val adapter = Adapter(jokes)
-        recyclerView.adapter = adapter
-        val linearLayoutManager = LinearLayoutManager(this)
-        recyclerView.layoutManager = linearLayoutManager
     }
 
     private fun loadRandomFact() {
