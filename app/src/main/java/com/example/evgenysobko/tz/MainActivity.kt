@@ -49,15 +49,11 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         button2.setOnClickListener {
             jokes.clear()
             val stringNum: String = inputtedText!!.editText!!.text.toString()
-            if (stringNum == "" || stringNum == "0" ) {
+            if (stringNum == "" || stringNum == "0") {
                 Toast.makeText(applicationContext, "Enter the correct number of jokes", Toast.LENGTH_LONG).show()
             } else {
-
-                // Sometimes it crashes when you try to load a lot of jokes, sometimes it doesn't.
-                // I dunno know why that's happening.
-
                 count = inputtedText!!.editText!!.text.toString().toInt()
-                for (i in 1..count) {
+                for (i in 0 until count) {
                     loadRandomFact()
                 }
             }
@@ -75,6 +71,9 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 val txt = (JSONObject(json).getJSONObject("value").get("joke")).toString()
                 txt.replace("&quot;", "")
                 jokes.add(Joke(txt))
+                runOnUiThread {
+                    list_of_jokes.adapter.notifyDataSetChanged()
+                }
             }
         })
 
