@@ -40,15 +40,16 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         inputtedText = findViewById(R.id.input_text)
 
         val recyclerView = findViewById<RecyclerView>(R.id.list_of_jokes)
+        val linearLayoutManager = LinearLayoutManager(this)
         val adapter = Adapter(jokes)
         recyclerView.adapter = adapter
-        val linearLayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = linearLayoutManager
+        adapter.notifyDataSetChanged()
 
         button2.setOnClickListener {
             jokes.clear()
             val stringNum: String = inputtedText!!.editText!!.text.toString()
-            if (!stringNum.contains(Regex("""\d""")) || stringNum == "" || stringNum == "0" ) {
+            if (stringNum == "" || stringNum == "0" ) {
                 Toast.makeText(applicationContext, "Enter the correct number of jokes", Toast.LENGTH_LONG).show()
             } else {
 
